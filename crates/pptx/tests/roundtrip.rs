@@ -842,7 +842,7 @@ fn wordart_warps_and_their_adjusts_round_trip() {
     let mut out = zip::ZipWriter::new(std::io::Cursor::new(Vec::new()));
     for i in 0..zip.len() {
         let mut f = zip.by_index(i).expect("entry");
-        let name = f.name().to_string();
+        let name = f.name().expect("zip entry name").into_owned();
         let mut data = vec![];
         std::io::Read::read_to_end(&mut f, &mut data).expect("read");
         if name == "ppt/slides/slide1.xml" {
@@ -976,7 +976,7 @@ fn transition_defaults_read_like_powerpoint() {
         let mut out = zip::ZipWriter::new(std::io::Cursor::new(Vec::new()));
         for i in 0..zip.len() {
             let mut f = zip.by_index(i).expect("entry");
-            let name = f.name().to_string();
+            let name = f.name().expect("zip entry name").into_owned();
             let mut data = vec![];
             std::io::Read::read_to_end(&mut f, &mut data).expect("read");
             if name == "ppt/slides/slide1.xml" {
